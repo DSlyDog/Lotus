@@ -1,0 +1,2 @@
+Lotus is a discord bot for the Dark Lotus guild in World of Warcraft. It does things like send out notifications for raids, send announcements,
+and play music in voice channels. And more new features are frequently being worked on.
