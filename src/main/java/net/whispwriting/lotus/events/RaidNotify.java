@@ -16,7 +16,7 @@ public class RaidNotify {
                 while (Lotus.running){
                     LocalDateTime current = LocalDateTime.now();
                     if ((current.getDayOfWeek().name().equals("TUESDAY") || current.getDayOfWeek().name().equals("THURSDAY"))
-                            && current.getHour() == 19 && current.getMinute() == 0 && current.getSecond() == 0){
+                            && current.getHour() == 19 && current.getMinute() == 30 && current.getSecond() == 0){
                         TextChannel channel = Lotus.getChannel("announcements");
                         MessageBuilder builder = new MessageBuilder();
                         builder.allowMentions(Message.MentionType.USER, Message.MentionType.ROLE);
@@ -29,7 +29,7 @@ public class RaidNotify {
                     }
 
                     if ((current.getDayOfWeek().name().equals("TUESDAY") || current.getDayOfWeek().name().equals("THURSDAY"))
-                            && current.getHour() == 20 && current.getMinute() == 30 && current.getSecond() == 0){
+                            && current.getHour() == 21 && current.getMinute() == 0 && current.getSecond() == 0){
                         TextChannel channel = Lotus.getChannel("announcements");
                         MessageBuilder builder = new MessageBuilder();
                         builder.allowMentions(Message.MentionType.USER, Message.MentionType.ROLE);
