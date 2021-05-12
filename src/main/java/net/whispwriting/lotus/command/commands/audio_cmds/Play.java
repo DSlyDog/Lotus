@@ -11,6 +11,8 @@ import java.util.List;
 
 public class Play implements Command {
 
+    private Lotus bot = Lotus.getInstance();
+
     @Override
     public void onCommand(Member sender, String label, String[] args, List<Message.Attachment> attachments, TextChannel channel) {
         Member self = channel.getGuild().getSelfMember();
@@ -18,18 +20,18 @@ public class Play implements Command {
         GuildVoiceState memberVoiceState = sender.getVoiceState();
 
         if (args.length == 0){
-            Lotus.sendMessage("Missing arguments: lo!play <link>", channel);
+            bot.sendMessage("Missing arguments: lo!play <link>", channel);
             return;
         }
 
         if (!voiceState.inVoiceChannel()){
-            Lotus.sendMessage("I must be in a voice channel to play music.", channel);
+            bot.sendMessage("I must be in a voice channel to play music.", channel);
             return;
         } else if (!memberVoiceState.inVoiceChannel()){
-            Lotus.sendMessage("You must be in my voice channel to play music.", channel);
+            bot.sendMessage("You must be in my voice channel to play music.", channel);
             return;
         } else if (!memberVoiceState.getChannel().getName().equals(voiceState.getChannel().getName())){
-            Lotus.sendMessage("You must be in my voice channel to play music.", channel);
+            bot.sendMessage("You must be in my voice channel to play music.", channel);
             return;
         }
 
@@ -53,7 +55,7 @@ public class Play implements Command {
                 LotusPlayer.getInstance(channel.getGuild()).load(channel, "./sounds/gtfo.wav");
                 break;
             default:
-                Lotus.sendMessage("I don't seem to have any soundtracks with that name.", channel);
+                bot.sendMessage("I don't seem to have any soundtracks with that name.", channel);
         }
     }
 

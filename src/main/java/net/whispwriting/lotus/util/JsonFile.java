@@ -60,7 +60,21 @@ public class JsonFile {
         try {
             reader = new FileReader(file);
             JSONObject object = (JSONObject) parser.parse(reader);
-            int num = (int) object.get(path);
+            int num = Integer.parseInt(object.get(path) + "");
+            reader.close();
+            return num;
+        }catch (Exception e){
+            System.err.println("File read error");
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public long getLong(String path){
+        try {
+            reader = new FileReader(file);
+            JSONObject object = (JSONObject) parser.parse(reader);
+            long num = (long) object.get(path);
             reader.close();
             return num;
         }catch (Exception e){

@@ -13,6 +13,8 @@ import java.util.List;
 
 public class Announce implements Command {
 
+    private Lotus bot = Lotus.getInstance();
+
     @Override
     public void onCommand(Member sender, String label, String[] args, List<Message.Attachment> attachments, TextChannel channel) {
         boolean permission = false;
@@ -22,12 +24,12 @@ public class Announce implements Command {
         }
 
         if (!permission){
-            Lotus.sendMessage("You do not have permission to use that command.", channel);
+            bot.sendMessage("You do not have permission to use that command.", channel);
             return;
         }
 
         if (args.length < 3){
-            Lotus.sendMessage("Not enough arguments, either the announcer name, output channel, or message is missing.", channel);
+            bot.sendMessage("Not enough arguments, either the announcer name, output channel, or message is missing.", channel);
             return;
         }
 
@@ -35,18 +37,18 @@ public class Announce implements Command {
         String avatarURL = file.getString("avatar");
 
         if (avatarURL.equals("")){
-            Lotus.sendMessage("Announcer not found: " + args[0], channel);
+            bot.sendMessage("Announcer not found: " + args[0], channel);
             return;
         }
 
-        TextChannel outputChannel = Lotus.getChannel(args[1]);
+        TextChannel outputChannel = bot.getChannel(args[1]);
 
         if (args[0].equals("self")){
-            Lotus.sendMessage(args[2], outputChannel);
+            bot.sendMessage(args[2], outputChannel);
         }
 
         if (outputChannel == null){
-            Lotus.sendMessage("Channel not found: " + args[1], channel);
+            bot.sendMessage("Channel not found: " + args[1], channel);
         }
 
         Webhook outputWebhook = getWebhook(outputChannel);

@@ -8,7 +8,7 @@ import net.whispwriting.lotus.Lotus;
 import java.time.LocalDateTime;
 
 public class RaidNotify {
-
+/*
     public static void start(){
         Thread raidNotify = new Thread(new Runnable() {
             @Override
@@ -22,7 +22,7 @@ public class RaidNotify {
                         builder.allowMentions(Message.MentionType.USER, Message.MentionType.ROLE);
                         builder.mentionRoles("819115150069858334");
                         builder.setContent("<@&819115150069858334> A raid run will start in approximately two hours " +
-                                "(9pm EST). If you plan to come, please be ready for an invite in approximately " +
+                                "(9:30pm EST). If you plan to come, please be ready for an invite in approximately " +
                                 "ninety minutes.");
                         Message message = builder.build();
                         Lotus.sendMessage(message, channel);
@@ -47,5 +47,5 @@ public class RaidNotify {
             }
         });
         raidNotify.start();
-    }
+    }*/
 }

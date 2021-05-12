@@ -15,6 +15,7 @@ import java.util.List;
 
 public class LotusPlayer {
 
+    private Lotus bot = Lotus.getInstance();
     private static LotusPlayer INSTANCE;
     private MusicManager musicManager;
     private AudioPlayerManager audioManager;
@@ -75,7 +76,7 @@ public class LotusPlayer {
         @Override
         public void trackLoaded(AudioTrack audioTrack) {
             musicManager.queue(audioTrack);
-            Lotus.sendMessage("Adding to queue: " + audioTrack.getInfo().title + ", by " +
+            bot.sendMessage("Adding to queue: " + audioTrack.getInfo().title + ", by " +
                     audioTrack.getInfo().author + "\n" + audioTrack.getInfo().uri, channel);
         }
 
@@ -83,7 +84,7 @@ public class LotusPlayer {
         public void playlistLoaded(AudioPlaylist audioPlaylist) {
             AudioTrack audioTrack = audioPlaylist.getTracks().get(0);
             musicManager.queue(audioTrack);
-            Lotus.sendMessage("Adding to queue: " + audioTrack.getInfo().title + ", by " +
+            bot.sendMessage("Adding to queue: " + audioTrack.getInfo().title + ", by " +
                     audioTrack.getInfo().author + "\n" + audioTrack.getInfo().uri, channel);
         }
 
@@ -94,7 +95,7 @@ public class LotusPlayer {
 
         @Override
         public void loadFailed(FriendlyException e) {
-            Lotus.sendMessage("Search failed", channel);
+            bot.sendMessage("Search failed", channel);
         }
     }
 
@@ -110,13 +111,13 @@ public class LotusPlayer {
         @Override
         public void trackLoaded(AudioTrack audioTrack) {
             musicManager.queue(audioTrack);
-            Lotus.sendMessage("Playing: " + audioTrack.getInfo().title + ", by " +
+            bot.sendMessage("Playing: " + audioTrack.getInfo().title + ", by " +
                     audioTrack.getInfo().author + "\n" + audioTrack.getInfo().uri, channel);
         }
 
         @Override
         public void playlistLoaded(AudioPlaylist audioPlaylist) {
-            Lotus.sendMessage("Adding " + audioPlaylist.getTracks().size() + " to queue from " +
+            bot.sendMessage("Adding " + audioPlaylist.getTracks().size() + " to queue from " +
                     audioPlaylist.getName(), channel);
 
             for (AudioTrack track : audioPlaylist.getTracks()){
@@ -131,7 +132,7 @@ public class LotusPlayer {
 
         @Override
         public void loadFailed(FriendlyException e) {
-            Lotus.sendMessage("Search failed", channel);
+            bot.sendMessage("Search failed", channel);
         }
     }
 }

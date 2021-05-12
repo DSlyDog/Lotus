@@ -11,16 +11,18 @@ import java.util.List;
 
 public class ClearQueue implements Command {
 
+    private Lotus bot = Lotus.getInstance();
+
     @Override
     public void onCommand(Member sender, String label, String[] args, List<Message.Attachment> attachments, TextChannel channel) {
         LotusPlayer player = LotusPlayer.getInstance(channel.getGuild());
 
         if (player.isQueueEmpty()){
-            Lotus.sendMessage("The queue is already empty.", channel);
+            bot.sendMessage("The queue is already empty.", channel);
             return;
         }
 
         player.clearQueue();
-        Lotus.sendMessage("Queue cleared.", channel);
+        bot.sendMessage("Queue cleared.", channel);
     }
 }

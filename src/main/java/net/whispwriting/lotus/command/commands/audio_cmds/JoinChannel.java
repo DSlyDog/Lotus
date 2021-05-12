@@ -10,10 +10,12 @@ import java.util.List;
 
 public class JoinChannel implements Command {
 
+    private Lotus bot = Lotus.getInstance();
+
     @Override
     public void onCommand(Member sender, String label, String[] args, List<Message.Attachment> attachments, TextChannel channel) {
         if (args.length < 1){
-            Lotus.sendMessage("Please provide the voice channel you would like Lotus to join.", channel);
+            bot.sendMessage("Please provide the voice channel you would like Lotus to join.", channel);
             return;
         }
 
@@ -23,12 +25,12 @@ public class JoinChannel implements Command {
         try {
             voiceChannel = guild.getVoiceChannelsByName(args[0], true).get(0);
         }catch(ArrayIndexOutOfBoundsException e){
-            Lotus.sendMessage("No channel was found with that name.", channel);
+            bot.sendMessage("No channel was found with that name.", channel);
             return;
         }
 
         AudioManager manager = channel.getGuild().getAudioManager();;
         manager.openAudioConnection(voiceChannel);
-        Lotus.sendMessage("Connecting to <#" + voiceChannel.getId() + ">.", channel);
+        bot.sendMessage("Connecting to <#" + voiceChannel.getId() + ">.", channel);
     }
 }

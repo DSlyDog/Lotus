@@ -13,21 +13,23 @@ import java.util.List;
 
 public class CreateAnnouncer implements Command {
 
+    private Lotus bot = Lotus.getInstance();
+
     @Override
     public void onCommand(Member sender, String label, String[] args, List<Message.Attachment> attachments, TextChannel channel) {
         boolean permission = false;
         for (Role role : sender.getRoles()){
-            if (role.getName().equals("Co Owner") || role.getName().equals("Jodas' Bitch"))
+            if (role.getName().equals("Co Owner"))
                 permission = true;
         }
 
         if (!permission){
-            Lotus.sendMessage("You do not have permission to use that command.", channel);
+            bot.sendMessage("You do not have permission to use that command.", channel);
             return;
         }
 
         if (args.length != 1){
-            Lotus.sendMessage("Incorrect argument count. Please only provide the name and attach an icon", channel);
+            bot.sendMessage("Incorrect argument count. Please only provide the name and attach an icon", channel);
             return;
         }
 
@@ -36,20 +38,20 @@ public class CreateAnnouncer implements Command {
         }
 
         if (attachments.size() < 1 && !args[0].equals("self")){
-            Lotus.sendMessage("You must attach an image for the announcer's avatar.", channel);
+            bot.sendMessage("You must attach an image for the announcer's avatar.", channel);
             return;
         }
 
         JsonFile file = new JsonFile(args[0], "announcers");
         if (args[0].equals("self"))
-            file.set("avatar", Lotus.avatar);
+            file.set("avatar", bot.getAvatar());
         else
             file.set("avatar", attachments.get(0).getUrl());
         try {
             file.save();
-            Lotus.sendMessage("Successfully created announcer", channel);
+            bot.sendMessage("Successfully created announcer", channel);
         } catch (IOException e) {
-            Lotus.sendMessage("Could not create announcer; check the bot's console.", channel);
+            bot.sendMessage("Could not create announcer; check the bot's console.", channel);
             e.printStackTrace();
         }
     }

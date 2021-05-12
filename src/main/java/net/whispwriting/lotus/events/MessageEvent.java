@@ -21,12 +21,13 @@ public class MessageEvent extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event){
+        Lotus bot = Lotus.getInstance();
         TextChannel channel = event.getChannel();
 
-        if (event.getMessage().getContentRaw().startsWith(Lotus.prefix))
+        if (event.getMessage().getContentRaw().startsWith(bot.getPrefix()))
             return;
 
-        if (Lotus.announcerChannels.containsKey(channel) && !event.getAuthor().isBot()){
+        if (bot.getAnnouncerChannels().containsKey(channel) && !event.getAuthor().isBot()){
             announce(event.getChannel(), event.getMessage());
             return;
         }
@@ -40,12 +41,13 @@ public class MessageEvent extends ListenerAdapter {
     }
 
     public void announce(TextChannel channel, Message input){
-        Announcer announcer = Lotus.announcerChannels.get(channel);
+        Lotus bot = Lotus.getInstance();
+        Announcer announcer = bot.getAnnouncerChannels().get(channel);
         JsonFile jsonFile = new JsonFile(announcer.getName(), "announcers");
         String avatar = jsonFile.getString("avatar");
         TextChannel outputChannel = announcer.getOutput();
         if (announcer.getName().equals("self")){
-            Lotus.sendMessage(input, outputChannel);
+            bot.sendMessage(input, outputChannel);
             return;
         }
 

@@ -11,23 +11,26 @@ import net.whispwriting.lotus.util.audio.LotusPlayer;
 import java.util.List;
 
 public class LeaveChannel implements Command {
+
+    private Lotus bot = Lotus.getInstance();
+
     @Override
     public void onCommand(Member sender, String label, String[] args, List<Message.Attachment> attachments, TextChannel channel) {
         LotusPlayer player = LotusPlayer.getInstance(channel.getGuild());
         Member self = channel.getGuild().getSelfMember();
 
         if (!player.isQueueEmpty()){
-            Lotus.sendMessage("I am playing music right now. Please wait until I've played all the queued songs.",
+            bot.sendMessage("I am playing music right now. Please wait until I've played all the queued songs.",
                     channel);
             return;
         }
 
         if (!self.getVoiceState().inVoiceChannel()){
-            Lotus.sendMessage("I am not currently in a voice channel.", channel);
+            bot.sendMessage("I am not currently in a voice channel.", channel);
             return;
         }
 
-        Lotus.sendMessage("Leaving voice channel...", channel);
+        bot.sendMessage("Leaving voice channel...", channel);
         AudioManager manager = channel.getGuild().getAudioManager();
         manager.closeAudioConnection();
     }

@@ -15,21 +15,23 @@ import java.util.List;
 
 public class CreateAnnounceChannel implements Command {
 
+    private Lotus bot = Lotus.getInstance();
+
     @Override
     public void onCommand(Member sender, String label, String[] args, List<Message.Attachment> attachments, TextChannel channel) {
         boolean permission = false;
         for (Role role : sender.getRoles()){
-            if (role.getName().equals("Co Owner") || role.getName().equals("Jodas' Bitch"))
+            if (role.getName().equals("Co Owner"))
                 permission = true;
         }
 
         if (!permission){
-            Lotus.sendMessage("You do not have permission to use that command.", channel);
+            bot.sendMessage("You do not have permission to use that command.", channel);
             return;
         }
 
         if (args.length < 2){
-            Lotus.sendMessage("Please provide the announcer name and the output channel.", channel);
+            bot.sendMessage("Please provide the announcer name and the output channel.", channel);
             return;
         }
 
@@ -37,18 +39,18 @@ public class CreateAnnounceChannel implements Command {
         String avatarURL = file.getString("avatar");
 
         if (avatarURL.equals("")){
-            Lotus.sendMessage("Announcer not found: " + args[0], channel);
+            bot.sendMessage("Announcer not found: " + args[0], channel);
             return;
         }
 
-        TextChannel outputChannel = Lotus.getChannel(args[1]);
+        TextChannel outputChannel = bot.getChannel(args[1]);
 
         if (outputChannel == null){
-            Lotus.sendMessage("Channel not found: " + args[1], channel);
+            bot.sendMessage("Channel not found: " + args[1], channel);
         }
 
-        if (Lotus.announcerChannels.containsKey(channel)){
-            Lotus.sendMessage("An auto announcer already exists for this channel.", channel);
+        if (bot.getAnnouncerChannels().containsKey(channel)){
+            bot.sendMessage("An auto announcer already exists for this channel.", channel);
         }
 
         JsonFile announcerFile = new JsonFile(channel.getName(), "auto announcers");
@@ -57,13 +59,13 @@ public class CreateAnnounceChannel implements Command {
         try {
             announcerFile.save();
         } catch (IOException e) {
-            Lotus.sendMessage("Failed to save auto announcer. Please notify Maika and try again later.", channel);
+            bot.sendMessage("Failed to save auto announcer. Please notify Maika and try again later.", channel);
             e.printStackTrace();
         }
 
         Announcer announcer = new Announcer(args[0], outputChannel);
 
-        Lotus.announcerChannels.put(channel, announcer);
-        Lotus.sendMessage("Messages sent in this channel will now be announced in \"" + args[1] + "\"", channel);
+        bot.getAnnouncerChannels().put(channel, announcer);
+        bot.sendMessage("Messages sent in this channel will now be announced in \"" + args[1] + "\"", channel);
     }
 }

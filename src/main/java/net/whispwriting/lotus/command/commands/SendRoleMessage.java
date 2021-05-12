@@ -10,16 +10,19 @@ import java.io.IOException;
 import java.util.List;
 
 public class SendRoleMessage implements Command {
+
+    private Lotus bot = Lotus.getInstance();
+
     @Override
     public void onCommand(Member sender, String label, String[] args, List<Message.Attachment> attachments, TextChannel channel) {
         boolean permission = false;
         for (Role role : sender.getRoles()){
-            if (role.getName().equals("Co Owner") || role.getName().equals("Jodas' Bitch"))
+            if (role.getName().equals("Co Owner"))
                 permission = true;
         }
 
         if (!permission){
-            Lotus.sendMessage("You do not have permission to use that command.", channel);
+            bot.sendMessage("You do not have permission to use that command.", channel);
             return;
         }
 
@@ -39,7 +42,7 @@ public class SendRoleMessage implements Command {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        TextChannel roleChannel = Lotus.getChannel("roles");
+        TextChannel roleChannel = bot.getChannel("roles");
 
         String id = roleChannel.getLatestMessageId();
         MessageHistory history = roleChannel.getHistory();
@@ -50,9 +53,9 @@ public class SendRoleMessage implements Command {
         if (messageText.contains(lastMessage.getContentRaw())){
             lastMessage.editMessage(builder.build()).queue();
             lastMessage.addReaction("\uD83D\uDCE3").queue();
-            Lotus.sendMessage("Roles message updated.", channel);
+            bot.sendMessage("Roles message updated.", channel);
         }else{
-            Lotus.sendMessage("The roles message failed to update.", channel);
+            bot.sendMessage("The roles message failed to update.", channel);
         }
     }
 }

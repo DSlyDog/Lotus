@@ -11,12 +11,14 @@ import java.util.List;
 
 public class SetVolume implements Command {
 
+    private Lotus bot = Lotus.getInstance();
+
     @Override
     public void onCommand(Member sender, String label, String[] args, List<Message.Attachment> attachments, TextChannel channel) {
         LotusPlayer player = LotusPlayer.getInstance(channel.getGuild());
 
         if (args.length < 1){
-            Lotus.sendMessage("Please provide a new volume level.", channel);
+            bot.sendMessage("Please provide a new volume level.", channel);
             return;
         }
 
@@ -25,11 +27,11 @@ public class SetVolume implements Command {
         try{
             volume = Integer.parseInt(args[0]);
         }catch(NumberFormatException e){
-            Lotus.sendMessage("Volume must be a number.", channel);
+            bot.sendMessage("Volume must be a number.", channel);
             return;
         }
 
         player.setVolume(volume);
-        Lotus.sendMessage("New volume level set.", channel);
+        bot.sendMessage("New volume level set.", channel);
     }
 }

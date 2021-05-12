@@ -13,6 +13,7 @@ public class ReactionEvent extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReactionAdd(@NotNull GuildMessageReactionAddEvent event) {
+        Lotus bot = Lotus.getInstance();
         if (event.getMember().getUser().isBot()) {
             return;
         }
@@ -23,8 +24,8 @@ public class ReactionEvent extends ListenerAdapter {
         JsonFile file = new JsonFile("role message", "messages");
         String messageText = file.getString("messageText");
         if (message.getContentRaw().equals(messageText)){
-            MessageReaction.ReactionEmote star = MessageReaction.ReactionEmote.fromUnicode("\u2B50", Lotus.getJDA());
-            MessageReaction.ReactionEmote megaphone = MessageReaction.ReactionEmote.fromUnicode("\uD83D\uDCE3", Lotus.getJDA());
+            MessageReaction.ReactionEmote star = MessageReaction.ReactionEmote.fromUnicode("\u2B50", bot.getJDA());
+            MessageReaction.ReactionEmote megaphone = MessageReaction.ReactionEmote.fromUnicode("\uD83D\uDCE3", bot.getJDA());
             if (event.getReaction().getReactionEmote().equals(star)) {
                 Role role = event.getGuild().getRolesByName("Raider Notify", false).get(0);
                 event.getGuild().addRoleToMember(event.getMember(), role).queue();
@@ -37,6 +38,7 @@ public class ReactionEvent extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReactionRemove(@NotNull GuildMessageReactionRemoveEvent event){
+        Lotus bot = Lotus.getInstance();
         if (event.getMember().getUser().isBot()) {
             return;
         }
@@ -47,8 +49,8 @@ public class ReactionEvent extends ListenerAdapter {
         JsonFile file = new JsonFile("role message", "messages");
         String messageText = file.getString("messageText");
         if (message.getContentRaw().equals(messageText)){
-            MessageReaction.ReactionEmote star = MessageReaction.ReactionEmote.fromUnicode("\u2B50", Lotus.getJDA());
-            MessageReaction.ReactionEmote megaphone = MessageReaction.ReactionEmote.fromUnicode("\uD83D\uDCE3", Lotus.getJDA());
+            MessageReaction.ReactionEmote star = MessageReaction.ReactionEmote.fromUnicode("\u2B50", bot.getJDA());
+            MessageReaction.ReactionEmote megaphone = MessageReaction.ReactionEmote.fromUnicode("\uD83D\uDCE3", bot.getJDA());
             if (event.getReaction().getReactionEmote().equals(star)) {
                 Role role = event.getGuild().getRolesByName("Raider Notify", false).get(0);
                 event.getGuild().removeRoleFromMember(event.getMember(), role).queue();
