@@ -80,7 +80,13 @@ public class Announcement {
                 public void run()
                 {
                     send();
-                    startExecutionAt(targetDay, targetHour, targetMin, targetSec);
+                    try {
+                        Thread.sleep(5000);
+                        startExecutionAt(targetDay, targetHour, targetMin, targetSec);
+                    } catch (InterruptedException e) {
+                        System.err.println("Failed to delay auto message execution call: " + e.getMessage());
+                        e.printStackTrace();
+                    }
                 }
 
             };
