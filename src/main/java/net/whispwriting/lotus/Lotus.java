@@ -51,7 +51,6 @@ public class Lotus {
                 Main.getLogger().info("Assets loaded");
             }
         });
-        postLoad.start();
         jda = JDABuilder.createDefault(token)
                 .setChunkingFilter(ChunkingFilter.ALL)
                 .setMemberCachePolicy(MemberCachePolicy.ALL)
@@ -62,6 +61,7 @@ public class Lotus {
                 .enableCache(CacheFlag.VOICE_STATE)
                 .build();
         jda.getPresence().setActivity(Activity.playing("World of Warcraft"));
+        postLoad.start();
         jda.addEventListener(handler);
         jda.addEventListener(messageEvent);
         jda.addEventListener(reactionEvent);
