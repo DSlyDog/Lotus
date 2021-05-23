@@ -44,18 +44,22 @@ public class SendRoleMessage implements Command {
         }
         TextChannel roleChannel = bot.getChannel("roles");
 
-        String id = roleChannel.getLatestMessageId();
-        MessageHistory history = roleChannel.getHistory();
-        history.retrievePast(100).complete();
-        Message lastMessage = history.getMessageById(id);
-        JsonFile messageFile = new JsonFile("role message", "messages");
-        String messageText = messageFile.getString("messageText");
-        if (messageText.contains(lastMessage.getContentRaw())){
-            lastMessage.editMessage(builder.build()).queue();
-            lastMessage.addReaction("\uD83D\uDCE3").queue();
-            bot.sendMessage("Roles message updated.", channel);
-        }else{
-            bot.sendMessage("The roles message failed to update.", channel);
+        try {
+            String id = roleChannel.getLatestMessageId();
+            MessageHistory history = roleChannel.getHistory();
+            history.retrievePast(100).complete();
+            Message lastMessage = history.getMessageById(id);
+            JsonFile messageFile = new JsonFile("role message", "messages");
+            String messageText = messageFile.getString("messageText");
+            if (messageText.contains(lastMessage.getContentRaw())) {
+                lastMessage.editMessage(builder.build()).queue();
+                lastMessage.addReaction("\uD83D\uDCE3").queue();
+                bot.sendMessage("Roles message updated.", channel);
+            } else {
+                bot.sendMessage("The roles message failed to update.", channel);
+            }
+        }catch (IllegalStateException | NullPointerException e){
+            bot.sendMessage(message, roleChannel);
         }
     }
 }
