@@ -17,7 +17,7 @@ public class SendRoleMessage implements Command {
     public void onCommand(Member sender, String label, String[] args, List<Message.Attachment> attachments, TextChannel channel) {
         boolean permission = false;
         for (Role role : sender.getRoles()){
-            if (role.getName().equals("Co Owner"))
+            if (role.getName().equals("Co Owner") || role.getName().equals("Admin"))
                 permission = true;
         }
 
